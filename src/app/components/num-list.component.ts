@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-num-list',
@@ -6,13 +6,21 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './num-list.component.html',
   styleUrl: './num-list.component.css'
 })
-export class NumListComponent implements OnInit {
+export class NumListComponent implements OnInit, OnChanges {
   @Input()
   values: number[] = []
+
+  @Input()
+  latest: number = 0
 
   total: number  = 0
 
   ngOnInit(): void {
-    this.total = this.values.reduce((acc, v) => acc + v, 0) // 0 - acc init value (if not declared will defaults to 0)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.info('changes: ', changes)
+    this.total = changes['values'].currentValue.reduce((acc: number, v:number) => acc + v, 0) 
+    // ..., 0 - acc init value (if not declared will defaults to 0)
   }
 }

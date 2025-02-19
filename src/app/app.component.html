@@ -1,6 +1,22 @@
 <h1>Number List</h1>
 
 <div class="side-by-side">
-  <app-num-input (onNewNumber)="whenNewNumber($event)"></app-num-input>
-  <app-num-list [values]="nums"></app-num-list>
+  <!-- #nic1 - template reference -->
+  <app-num-input (onNewNumber)="whenNewNumber($event)" instanceName="nic1" #nic1>
+    <!-- Content projection (to child component)-->
+    <button type="button" (click)="square()">Square</button>
+    <button type="button" (click)="negate()">Negate</button>
+  </app-num-input>
+
+  <app-num-input instanceName="nic2" #nic2>
+    <!-- Content projection (to child component)-->
+    <button type="button" (click)="square()">Square</button>
+    <button type="button" (click)="negate()">Negate</button>
+  </app-num-input>
+
+  <app-num-list [values]="nums" [latest]="newNum"></app-num-list>
+
+  <div>
+    <button type="button" (click)="nic2.process()">Process nic2</button>
+  </div>
 </div>
